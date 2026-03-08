@@ -1,0 +1,192 @@
+.navbar {
+    height: var(--nav-height);
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 24px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background-color: var(--bg-dark);
+}
+
+.navbar-container {
+    width: 100%;
+    max-width: var(--max-width);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.navbar-left .logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 700;
+    font-size: 1.25rem;
+    color: var(--text-primary);
+}
+
+.logo-icon-wrapper {
+    background: linear-gradient(135deg, #8B5CF6 0%, #6D28D9 100%);
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    color: white;
+}
+
+.logo-icon {
+    transform: rotate(-45deg);
+}
+
+.navbar-center {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    padding: 0 40px;
+}
+
+.search-bar {
+    position: relative;
+    width: 100%;
+    max-width: 480px;
+}
+
+.search-icon {
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-muted);
+}
+
+.search-input {
+    width: 100%;
+    padding: 12px 16px 12px 42px;
+    background-color: var(--bg-card);
+    border: 1px solid transparent;
+    border-radius: var(--radius-full);
+    color: var(--text-primary);
+    font-size: 0.95rem;
+    outline: none;
+    transition: 0.2s;
+}
+
+.search-input:focus {
+    background-color: var(--bg-card-hover);
+    border-color: var(--border-color);
+}
+
+.navbar-right {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.btn-link {
+    color: var(--text-primary);
+    font-weight: 500;
+    font-size: 0.95rem;
+}
+
+.btn-link:hover {
+    color: white;
+}
+
+.btn-primary {
+    background-color: var(--accent-purple);
+    color: white;
+    padding: 10px 20px;
+    border-radius: var(--radius-full);
+    font-weight: 600;
+    font-size: 0.95rem;
+}
+
+.btn-primary:hover {
+    background-color: var(--accent-purple-hover);
+}
+
+/* ── Logged-in state ─────────────────────────────── */
+.navbar-user-name {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    font-weight: 500;
+}
+
+.btn-logout {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    font-weight: 500;
+    border: 1px solid var(--border-color);
+    padding: 8px 14px;
+    border-radius: var(--radius-full);
+    background: transparent;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.btn-logout:hover {
+    color: #F87171;
+    border-color: rgba(248, 113, 113, 0.4);
+}
+
+/* ── Chat icon button ────────────────────────────────── */
+.btn-chat-icon {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 38px;
+    height: 38px;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s, border-color 0.2s;
+    flex-shrink: 0;
+}
+
+.btn-chat-icon:hover {
+    background: rgba(139, 92, 246, 0.15);
+    color: var(--text-primary);
+    border-color: rgba(139, 92, 246, 0.4);
+}
+
+.btn-chat-icon--active {
+    background: rgba(139, 92, 246, 0.2);
+    color: #A78BFA;
+    border-color: rgba(139, 92, 246, 0.5);
+}
+
+/* Green pulse dot on the chat icon */
+.chat-icon-pulse {
+    position: absolute;
+    top: 6px;
+    right: 6px;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #10B981;
+    border: 1.5px solid var(--bg-dark);
+    animation: navbar-pulse 2s infinite;
+}
+
+@keyframes navbar-pulse {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.4;
+    }
+}

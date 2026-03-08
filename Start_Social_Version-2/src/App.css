@@ -1,0 +1,61 @@
+/* Main App Layout */
+.app-container {
+  min-height: 100vh;
+  background-color: var(--bg-dark);
+}
+
+.main-content {
+  padding-bottom: 60px;
+}
+
+/* ── Section header ─────────────────────────────── */
+.section-header {
+  max-width: var(--max-width);
+  margin: 0 auto 28px;
+  padding: 40px 24px 0;
+}
+
+.section-title {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 6px;
+}
+
+.section-subtitle {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+}
+
+/* ── Projects grid ──────────────────────────────── */
+.projects-grid {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 24px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 24px;
+}
+
+/* ── Empty state ────────────────────────────────── */
+.no-results {
+  grid-column: 1 / -1;
+  text-align: center;
+  color: var(--text-muted);
+  padding: 48px 0;
+  font-size: 0.95rem;
+}
+
+@media (max-width: 768px) {
+  .hero-title {
+    font-size: 2.25rem;
+  }
+
+  .projects-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .navbar-center {
+    display: none;
+  }
+}
