@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Rocket, TrendingUp, Wrench, Users, ArrowLeft, Upload, X } from 'lucide-react';
 import { useAuth, API } from '../context/AuthContext';
+import Navbar from '../components/Navbar';
 import './OnboardingPage.css';
 
 // ── Role definitions ──────────────────────────────────────────────────────────
@@ -220,85 +221,82 @@ const OnboardingPage = () => {
 
     return (
         <div className="ob-page">
-            {/* ── Step 1: Role picker ── */}
-            {step === 'pick' && (
-                <div className="ob-container ob-fade-in">
-                    <div className="ob-header">
-                        <div className="auth-logo" style={{ justifyContent: 'center' }}>
-                            <div className="logo-icon-wrapper" style={{ background: 'linear-gradient(135deg, #8B5CF6,#6D28D9)', borderRadius: 10, width: 36, height: 36, display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white' }}>
-                                <Rocket size={18} fill="currentColor" />
-                            </div>
-                            <span style={{ fontWeight: 700, fontSize: '1.1rem' }}>StartSocial</span>
-                        </div>
-                        <h1 className="ob-title">I am a…</h1>
-                        <p className="ob-subtitle">Choose your role to personalise your experience</p>
-                    </div>
-
-                    <div className="ob-role-grid">
-                        {ROLES.map((role) => {
-                            const Icon = role.icon;
-                            return (
-                                <button
-                                    key={role.id}
-                                    className="ob-role-card"
-                                    style={{ '--role-color': role.color, '--role-bg': role.bg }}
-                                    onClick={() => handleRolePick(role)}
-                                >
-                                    <div className="ob-role-icon">
-                                        <Icon size={28} />
-                                    </div>
-                                    <h3 className="ob-role-label">{role.label}</h3>
-                                    <p className="ob-role-desc">{role.desc}</p>
-                                </button>
-                            );
-                        })}
-                    </div>
-                </div>
-            )}
-
-            {/* ── Step 2: Role form ── */}
-            {step === 'form' && roleObj && (
-                <div className="ob-container ob-fade-in">
-                    <button className="ob-back-btn" onClick={() => setStep('pick')}>
-                        <ArrowLeft size={16} /> Back
-                    </button>
-
-                    <div className="ob-form-header">
-                        <div className="ob-role-badge" style={{ background: roleObj.bg, color: roleObj.color }}>
-                            {React.createElement(roleObj.icon, { size: 18 })}
-                            <span>{roleObj.label}</span>
-                        </div>
-                        <h1 className="ob-title">Set up your profile</h1>
-                        <p className="ob-subtitle">Tell the community who you are</p>
-                    </div>
-
-                    <form onSubmit={handleSubmit} className="ob-form">
-                        <div className="ob-fields-grid">
-                            {/* Image upload at the top */}
-                            <ImageUploadField
-                                imageFile={imageFile}
-                                onImageChange={setImageFile}
-                                roleColor={roleObj.color}
-                            />
-
-                            {FORM_FIELDS[selectedRole.id].map(field => (
-                                <Field
-                                    key={field.name}
-                                    field={field}
-                                    value={formData[field.name] || ''}
-                                    onChange={handleFieldChange}
-                                />
-                            ))}
+            <Navbar />
+            <div className="ob-content-area">
+                {/* ── Step 1: Role picker ── */}
+                {step === 'pick' && (
+                    <div className="ob-container ob-fade-in">
+                        <div className="ob-header">
+                            <h1 className="ob-title">I am a…</h1>
+                            <p className="ob-subtitle">Choose your role to personalise your experience</p>
                         </div>
 
-                        {error && <p className="auth-error">{error}</p>}
+                        <div className="ob-role-grid">
+                            {ROLES.map((role) => {
+                                const Icon = role.icon;
+                                return (
+                                    <button
+                                        key={role.id}
+                                        className="ob-role-card"
+                                        style={{ '--role-color': role.color, '--role-bg': role.bg }}
+                                        onClick={() => handleRolePick(role)}
+                                    >
+                                        <div className="ob-role-icon">
+                                            <Icon size={28} />
+                                        </div>
+                                        <h3 className="ob-role-label">{role.label}</h3>
+                                        <p className="ob-role-desc">{role.desc}</p>
+                                    </button>
+                                );
+                            })}
+                        </div>
+                    </div>
+                )}
 
-                        <button type="submit" className="auth-submit-btn" disabled={loading}>
-                            {loading ? 'Saving…' : 'Complete setup →'}
+                {/* ── Step 2: Role form ── */}
+                {step === 'form' && roleObj && (
+                    <div className="ob-container ob-fade-in">
+                        <button className="ob-back-btn" onClick={() => setStep('pick')}>
+                            <ArrowLeft size={16} /> Back
                         </button>
-                    </form>
-                </div>
-            )}
+
+                        <div className="ob-form-header">
+                            <div className="ob-role-badge" style={{ background: roleObj.bg, color: roleObj.color }}>
+                                {React.createElement(roleObj.icon, { size: 18 })}
+                                <span>{roleObj.label}</span>
+                            </div>
+                            <h1 className="ob-title">Set up your profile</h1>
+                            <p className="ob-subtitle">Tell the community who you are</p>
+                        </div>
+
+                        <form onSubmit={handleSubmit} className="ob-form">
+                            <div className="ob-fields-grid">
+                                {/* Image upload at the top */}
+                                <ImageUploadField
+                                    imageFile={imageFile}
+                                    onImageChange={setImageFile}
+                                    roleColor={roleObj.color}
+                                />
+
+                                {FORM_FIELDS[selectedRole.id].map(field => (
+                                    <Field
+                                        key={field.name}
+                                        field={field}
+                                        value={formData[field.name] || ''}
+                                        onChange={handleFieldChange}
+                                    />
+                                ))}
+                            </div>
+
+                            {error && <p className="auth-error">{error}</p>}
+
+                            <button type="submit" className="auth-submit-btn" disabled={loading}>
+                                {loading ? 'Saving…' : 'Complete setup →'}
+                            </button>
+                        </form>
+                    </div>
+                )}
+            </div>
         </div>
     );
 };

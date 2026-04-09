@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Rocket, Search, LogOut, MessageSquare } from 'lucide-react';
+import React, { useState, useRef, useEffect } from 'react';
+import { Rocket, Search, LogOut, MessageSquare, ChevronDown, UserCircle2 } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import ChatSidebar from './ChatSidebar';
@@ -9,11 +9,24 @@ const Navbar = () => {
     const { user, logout } = useAuth();
     const navigate = useNavigate();
     const [chatOpen, setChatOpen] = useState(false);
+    const [dropdownOpen, setDropdownOpen] = useState(false);
+    const dropdownRef = useRef(null);
 
     const handleLogout = () => {
         logout();
         navigate('/', { replace: true });
     };
+
+    // Close dropdown when clicking outside
+    useEffect(() => {
+        const handler = (e) => {
+            if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
+                setDropdownOpen(false);
+            }
+        };
+        document.addEventListener('mousedown', handler);
+        return () => document.removeEventListener('mousedown', handler);
+    }, []);
 
     return (
         <>
@@ -41,13 +54,44 @@ const Navbar = () => {
 
                     <div className="navbar-right">
                         {user ? (
-                            <>
-                                <span className="navbar-user-name">Hi, {user.name?.split(' ')[0]}</span>
-                                <button className="btn-logout" onClick={handleLogout}>
-                                    <LogOut size={16} />
-                                    Log out
+                            <div className="navbar-profile-wrapper" ref={dropdownRef}>
+                                <button
+                                    className={`navbar-profile-btn ${dropdownOpen ? 'navbar-profile-btn--open' : ''}`}
+                                    onClick={() => setDropdownOpen(o => !o)}
+                                    aria-expanded={dropdownOpen}
+                                    aria-haspopup="true"
+                                >
+                                    <div className="navbar-avatar">
+                                        {user.profile?.imageUrl
+                                            ? <img src={`http://localhost:5001${user.profile.imageUrl}`} alt="avatar" className="navbar-avatar-img" />
+                                            : <UserCircle2 size={22} />
+                                        }
+                                    </div>
+                                    <span className="navbar-user-name">Hi, {user.name?.split(' ')[0]}</span>
+                                    <ChevronDown size={15} className={`navbar-chevron ${dropdownOpen ? 'navbar-chevron--up' : ''}`} />
                                 </button>
-                            </>
+
+                                {dropdownOpen && (
+                                    <div className="navbar-dropdown" role="menu">
+                                        <Link
+                                            to="/profile/edit"
+                                            className="navbar-dropdown-item"
+                                            onClick={() => setDropdownOpen(false)}
+                                        >
+                                            <UserCircle2 size={15} />
+                                            Profile
+                                        </Link>
+                                        <div className="navbar-dropdown-divider" />
+                                        <button
+                                            className="navbar-dropdown-item navbar-dropdown-item--danger"
+                                            onClick={handleLogout}
+                                        >
+                                            <LogOut size={15} />
+                                            Log out
+                                        </button>
+                                    </div>
+                                )}
+                            </div>
                         ) : (
                             <>
                                 <Link to="/login" className="btn-link">Log in</Link>

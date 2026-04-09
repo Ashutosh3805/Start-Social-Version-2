@@ -9,6 +9,7 @@ import Manufacturers from './components/Manufacturers';
 import LoginPage from './pages/LoginPage';
 import SignupPage from './pages/SignupPage';
 import OnboardingPage from './pages/OnboardingPage';
+import EditProfilePage from './pages/EditProfilePage';
 import { useAuth } from './context/AuthContext';
 import './App.css';
 
@@ -49,6 +50,14 @@ function App() {
         element={
           <ProtectedRoute>
             <OnboardingPage />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/profile/edit"
+        element={
+          <ProtectedRoute>
+            <EditProfilePage />
           </ProtectedRoute>
         }
       />
